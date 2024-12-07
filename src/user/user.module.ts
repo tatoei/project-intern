@@ -1,18 +1,28 @@
 import { Module } from '@nestjs/common';
 
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from './schema/user.schema';
+import { TUser, UserSchema } from '@/user/schema/user.schema';
 import { UserService } from './user.service';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from '@/auth/auth.module';
 import { UserController } from './user.controller';
+import { JwtModule } from '@nestjs/jwt/dist/jwt.module';
+import { AuthController } from '@/auth/auth.controller';
+import { JwtStrategy } from '@/auth/jwt.strategy';
+import { AuthService } from '@/auth/auth.service';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: TUser.name, schema: UserSchema }]),
+    // MongooseModule.forRoot('mongodb://localhost/nest_test'), 
     AuthModule,
+    JwtModule.register({
+      secret: 'secret',
+      signOptions: { expiresIn: 3600 },
+    }),
   ],
-  providers: [UserService],
-  controllers: [UserController],
+  providers: [UserService,AuthService, JwtStrategy,],
+  controllers: [UserController,AuthController],
   exports: [UserService], // Only add controllers here
 })
 export class UserModule {}
+

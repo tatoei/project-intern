@@ -4,17 +4,18 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from './schema/user.schema';
+import { TUser } from './schema/user.schema';
 import { Model } from 'mongoose';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDto } from '@/user/dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+  constructor(@InjectModel(TUser.name) private userModel: Model<TUser>,private jwtService: JwtService ) {}
 
   // createuser
-  async createUser(dto: CreateUserDto): Promise<User> {
+  async createUser(dto: CreateUserDto): Promise<TUser> {
     const {
       email,
       password,
@@ -59,12 +60,12 @@ export class UserService {
   }
 
   // getalluser
-  async getAllUsers(): Promise<User[]> {
+  async getAllUsers(): Promise<TUser[]> {
     return this.userModel.find({ isActive: true });
   }
 
   // getuserid
-  async getUserById(id: string): Promise<User> {
+  async getUserById(id: string): Promise<TUser> {
     return this.userModel.findById(id).exec();
   }
 

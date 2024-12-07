@@ -12,9 +12,10 @@ import {
 import { UserService } from './user.service';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { GetUser } from 'src/auth/get-user.decorator';
-import { CreateUserDto } from './dto/create-user.dto';
-import { User } from './schema/user.schema';
+import { GetUser } from '@/auth/get-user.decorator';
+import { CreateUserDto } from '@/user/dto/create-user.dto';
+import { TUser } from './schema/user.schema';
+
 
 @ApiTags('User')
 @ApiBearerAuth()
@@ -25,7 +26,7 @@ export class UserController {
   // get all user
   @Get('/')
   @UseGuards(AuthGuard('jwt'))
-  getAllUsers(@GetUser() user: User) {
+  getAllUsers(@GetUser() user: TUser) {
     if (!user) {
       // หากไม่พบข้อมูลผู้ใช้หรือไม่สามารถยืนยันตัวตนได้
       throw new NotFoundException('User not found or token is invalid');
@@ -43,14 +44,14 @@ export class UserController {
   // get token
   @Get('me')
   @UseGuards(AuthGuard('jwt'))
-  me(@GetUser() user: any) {
+  me(@GetUser() user: TUser ) {
     return user;
   }
 
   // create user
   @Post('create')
   @UseGuards(AuthGuard('jwt'))
-  createUser(@Body() createUser: CreateUserDto, @GetUser() user: User) {
+  createUser(@Body() createUser: CreateUserDto, @GetUser() user: TUser) {
     if (!user) {
       // หากไม่พบข้อมูลผู้ใช้หรือไม่สามารถยืนยันตัวตนได้
       throw new NotFoundException('User not found or token is invalid');
@@ -70,7 +71,7 @@ export class UserController {
   // get id
   @Get(':id')
   @UseGuards(AuthGuard('jwt'))
-  getUserId(@Param('id') id: string, @GetUser() user: User) {
+  getUserId(@Param('id') id: string, @GetUser() user: TUser) {
     if (!user) {
       // หากไม่พบข้อมูลผู้ใช้หรือไม่สามารถยืนยันตัวตนได้
       throw new NotFoundException('User not found or token is invalid');
@@ -92,7 +93,7 @@ export class UserController {
   async putUserId(
     @Param('id') id: string,
     @Body() dto: CreateUserDto,
-    @GetUser() user: User,
+    @GetUser() user: TUser,
   ) {
     if (!user) {
       // หากไม่พบข้อมูลผู้ใช้หรือไม่สามารถยืนยันตัวตนได้
@@ -112,7 +113,7 @@ export class UserController {
   // delete hard
   @Delete('hard:id')
   @UseGuards(AuthGuard('jwt'))
-  async deleteUserHard(@Param('id') id: string, @GetUser() user: User) {
+  async deleteUserHard(@Param('id') id: string, @GetUser() user: TUser) {
     if (!user) {
       // หากไม่พบข้อมูลผู้ใช้หรือไม่สามารถยืนยันตัวตนได้
       throw new NotFoundException('User not found or token is invalid');
@@ -131,7 +132,7 @@ export class UserController {
   // delete soft
   @Delete('soft:id')
   @UseGuards(AuthGuard('jwt'))
-  async deleteUserSoft(@Param('id') id: string, @GetUser() user: User) {
+  async deleteUserSoft(@Param('id') id: string, @GetUser() user: TUser) {
     if (!user) {
       // หากไม่พบข้อมูลผู้ใช้หรือไม่สามารถยืนยันตัวตนได้
       throw new NotFoundException('User not found or token is invalid');

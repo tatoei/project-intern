@@ -6,17 +6,17 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateUserDto } from 'src/user/dto/create-user.dto';
-import { User } from 'src/user/schema/user.schema';
+import { CreateUserDto } from '@/user/dto/create-user.dto';
+import { TUser } from '@/user/schema/user.schema';
 import * as bcrypt from 'bcrypt';
-import { LoginDto } from 'src/user/dto/login-user.dto';
+import { LoginUserDto } from '@/user//dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
-import { RefreshTokenDto } from 'src/user/dto/refresh-token.dto';
+import { RefreshTokenDto } from '@/user/dto/refresh-token.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectModel(User.name) private UserModel: Model<User>,
+    @InjectModel(TUser.name) private UserModel: Model<TUser>,
     private jwtService: JwtService,
   ) {}
 
@@ -76,7 +76,7 @@ export class AuthService {
   }
 
   // login
-  async login(dto: LoginDto) {
+  async login(dto: LoginUserDto) {
     const { email, password } = dto;
     // find if user exit by email
     const user = await this.UserModel.findOne({ email });
@@ -94,7 +94,7 @@ export class AuthService {
   }
 
   //accessToken,refreshToken
-  async generateUserTokens(user: User) {
+  async generateUserTokens(user: TUser) {
     const { isNewUser } = user;
     const payload = {
       email: user.email,

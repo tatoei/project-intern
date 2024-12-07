@@ -2,18 +2,19 @@ import { Module, forwardRef } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from 'src/user/schema/user.schema';
 import { JwtStrategy } from './jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import refreshJwtConfig from './config/refresh-jwt.config';
-import { UserModule } from 'src/user/user.module';
-import { UserService } from 'src/user/user.service';
+import { UserModule } from '@/user/user.module';
+import { UserService } from '@/user/user.service';
+import { TUser, UserSchema } from '@/user/schema/user.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: TUser.name, schema: UserSchema }]),
+    MongooseModule.forRoot('mongodb://localhost/nest_test'), 
     PassportModule,
     ConfigModule.forFeature(refreshJwtConfig),
     JwtModule.register({

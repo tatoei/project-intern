@@ -7,6 +7,7 @@ import { Factory, FactorySchema } from './schema/factory.schema';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Factory.name, schema: FactorySchema }]),
+    // MongooseModule.forRoot('mongodb://localhost/nest_test'), 
     FactoryModule,
   ],
   providers: [FactoryService],

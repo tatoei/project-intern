@@ -11,7 +11,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     });
   }
 
-  async validate(payload: any) {
+  async validate(payload: {email:string, firstname:string, lastname:string,role:string}) {
     console.log('validate-payload', payload);
     // payload คือข้อมูลที่อยู่ใน JWT
     return {
