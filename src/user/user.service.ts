@@ -49,7 +49,7 @@ export class UserService {
         imageUrl,
         isActive: true,
       });
-    } catch (error) {
+    } catch (error: any) {
       console.log('error', error);
 
       if (error.code === 11000) {

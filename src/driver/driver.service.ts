@@ -55,7 +55,7 @@ export class DriverService {
         profileImage,
         isActive: true,
       });
-    } catch (error) {
+    } catch (error : any) {
       console.error('Error:', error);
 
       if (error.code === 11000) {
