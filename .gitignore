@@ -2,5 +2,5 @@
 node_modules/
 
 # Ignore dist directory
-dist/
+# dist/
 .vercel
