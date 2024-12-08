@@ -20,7 +20,7 @@ const mongodb_1 = require("mongodb");
 const uri = 'mongodb+srv://toeiisararawee:toeiisararawee@cluster0.jodvh.mongodb.net/';
 const client = new mongodb_1.MongoClient(uri);
 const databaseName = 'uploadsDB';
-const collectionName = 'tuser';
+const collectionName = 'images';
 let UploadController = class UploadController {
     constructor() {
         client.connect().catch((err) => console.error('MongoDB connection error:', err));

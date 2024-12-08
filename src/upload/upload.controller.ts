@@ -18,7 +18,7 @@ import { MongoClient } from 'mongodb';
 const uri = 'mongodb+srv://toeiisararawee:toeiisararawee@cluster0.jodvh.mongodb.net/'; // Replace with your MongoDB URI
 const client = new MongoClient(uri);
 const databaseName = 'uploadsDB';
-const collectionName = 'tuser';
+const collectionName = 'images';
 
 @ApiBearerAuth()
 @Controller('upload')
@@ -44,6 +44,7 @@ export class UploadController {
   @UseInterceptors(
     FileInterceptor('file', {
       fileFilter: (req, file, callback) => {
+        // Allow only specific file types
         const allowedMimeTypes = ['image/jpeg', 'image/png'];
         if (allowedMimeTypes.includes(file.mimetype)) {
           callback(null, true);
@@ -54,6 +55,7 @@ export class UploadController {
     }),
   )
   async uploadFile(@UploadedFile() file: Express.Multer.File) {
+    // Check if the file exists
     if (!file) {
       throw new BadRequestException('File is undefined');
     }
@@ -71,11 +73,12 @@ export class UploadController {
         uploadDate: new Date(),
       };
 
-      // Store in MongoDB
+      // Store the data in MongoDB
       const db = client.db(databaseName);
       const collection = db.collection(collectionName);
       const result = await collection.insertOne(imageData);
 
+      // Return a success response
       return {
         message: 'File uploaded and stored as Base64 in MongoDB',
         fileId: result.insertedId,
