@@ -16,25 +16,47 @@ exports.UploadController = void 0;
 const common_1 = require("@nestjs/common");
 const platform_express_1 = require("@nestjs/platform-express");
 const swagger_1 = require("@nestjs/swagger");
-const multer_1 = require("multer");
-const path = require("path");
+const mongodb_1 = require("mongodb");
+const uri = 'mongodb+srv://toeiisararawee:toeiisararawee@cluster0.jodvh.mongodb.net/';
+const client = new mongodb_1.MongoClient(uri);
+const databaseName = 'uploadsDB';
+const collectionName = 'images';
 let UploadController = class UploadController {
-    uploadFile(file) {
+    constructor() {
+        client.connect().catch((err) => console.error('MongoDB connection error:', err));
+    }
+    async uploadFile(file) {
         if (!file) {
             throw new common_1.BadRequestException('File is undefined');
         }
-        return {
-            originalname: file.originalname,
-            filename: file.filename,
-            path: `/uploads/${file.filename}`,
-        };
+        try {
+            const base64String = file.buffer.toString('base64');
+            const imageData = {
+                originalname: file.originalname,
+                mimetype: file.mimetype,
+                size: file.size,
+                base64: base64String,
+                uploadDate: new Date(),
+            };
+            const db = client.db(databaseName);
+            const collection = db.collection(collectionName);
+            const result = await collection.insertOne(imageData);
+            return {
+                message: 'File uploaded and stored as Base64 in MongoDB',
+                fileId: result.insertedId,
+            };
+        }
+        catch (error) {
+            console.error('Error saving file to MongoDB:', error);
+            throw new common_1.BadRequestException('Failed to save file');
+        }
     }
 };
 exports.UploadController = UploadController;
 __decorate([
     (0, common_1.Post)(),
     (0, swagger_1.ApiConsumes)('multipart/form-data'),
-    (0, swagger_1.ApiOperation)({ summary: 'Upload a file' }),
+    (0, swagger_1.ApiOperation)({ summary: 'Upload a file and store as Base64 in MongoDB' }),
     (0, swagger_1.ApiBody)({
         schema: {
             type: 'object',
@@ -47,16 +69,6 @@ __decorate([
         },
     }),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file', {
-        storage: (0, multer_1.diskStorage)({
-            destination: './uploads',
-            filename: (req, file, callback) => {
-                const timestamp = Date.now();
-                const fileExtension = path.extname(file.originalname);
-                const baseName = path.basename(file.originalname, fileExtension);
-                const newFileName = `${baseName}-${timestamp}${fileExtension}`;
-                callback(null, newFileName);
-            },
-        }),
         fileFilter: (req, file, callback) => {
             const allowedMimeTypes = ['image/jpeg', 'image/png'];
             if (allowedMimeTypes.includes(file.mimetype)) {
@@ -70,11 +82,11 @@ __decorate([
     __param(0, (0, common_1.UploadedFile)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], UploadController.prototype, "uploadFile", null);
 exports.UploadController = UploadController = __decorate([
     (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Controller)('upload'),
-    (0, swagger_1.ApiBearerAuth)()
+    __metadata("design:paramtypes", [])
 ], UploadController);
 //# sourceMappingURL=upload.controller.js.map
