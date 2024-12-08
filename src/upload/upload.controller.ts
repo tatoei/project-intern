@@ -18,7 +18,7 @@ import { MongoClient } from 'mongodb';
 const uri = 'mongodb+srv://toeiisararawee:toeiisararawee@cluster0.jodvh.mongodb.net/'; // Replace with your MongoDB URI
 const client = new MongoClient(uri);
 const databaseName = 'uploadsDB';
-const collectionName = 'images';
+const collectionName = 'tuser';
 
 @ApiBearerAuth()
 @Controller('upload')
