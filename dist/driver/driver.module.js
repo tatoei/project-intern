@@ -19,6 +19,7 @@ exports.DriverModule = DriverModule = __decorate([
     (0, common_1.Module)({
         imports: [
             mongoose_1.MongooseModule.forFeature([{ name: driver_schema_1.Driver.name, schema: driver_schema_1.DriverSchema }]),
+            mongoose_1.MongooseModule.forRoot('mongodb+srv://toeiisararawee:toeiisararawee@cluster0.jodvh.mongodb.net/'),
             DriverModule,
         ],
         providers: [driver_service_1.DriverService],

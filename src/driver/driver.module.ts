@@ -7,6 +7,7 @@ import { Driver, DriverSchema } from './schema/driver.schema';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Driver.name, schema: DriverSchema }]),
+    MongooseModule.forRoot('mongodb+srv://toeiisararawee:toeiisararawee@cluster0.jodvh.mongodb.net/'), 
     DriverModule,
   ],
   providers: [DriverService],

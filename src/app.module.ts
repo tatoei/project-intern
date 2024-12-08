@@ -14,7 +14,7 @@ import { DriverModule } from './driver/driver.module';
 @Module({
   imports: [
     JwtModule.register({ global: true, secret: '123' }),
-    MongooseModule.forRoot('mongodb://atlas-sql-672c7ecd48246948735edb7a-bb5mg.a.query.mongodb.net/test?ssl=true&authSource=admin'),
+    MongooseModule.forRoot('mongodb+srv://toeiisararawee:toeiisararawee@cluster0.jodvh.mongodb.net/'),
     UserModule,
     AuthModule,
     UploadModule,

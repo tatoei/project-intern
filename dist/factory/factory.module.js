@@ -19,6 +19,7 @@ exports.FactoryModule = FactoryModule = __decorate([
     (0, common_1.Module)({
         imports: [
             mongoose_1.MongooseModule.forFeature([{ name: factory_schema_1.Factory.name, schema: factory_schema_1.FactorySchema }]),
+            mongoose_1.MongooseModule.forRoot('mongodb+srv://toeiisararawee:toeiisararawee@cluster0.jodvh.mongodb.net/'),
             FactoryModule,
         ],
         providers: [factory_service_1.FactoryService],

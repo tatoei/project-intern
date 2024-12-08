@@ -26,7 +26,7 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             jwt_1.JwtModule.register({ global: true, secret: '123' }),
-            mongoose_1.MongooseModule.forRoot('mongodb://atlas-sql-672c7ecd48246948735edb7a-bb5mg.a.query.mongodb.net/test?ssl=true&authSource=admin'),
+            mongoose_1.MongooseModule.forRoot('mongodb+srv://toeiisararawee:toeiisararawee@cluster0.jodvh.mongodb.net/'),
             user_module_1.UserModule,
             auth_module_1.AuthModule,
             upload_module_1.UploadModule,

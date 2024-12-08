@@ -24,6 +24,7 @@ exports.UserModule = UserModule = __decorate([
     (0, common_1.Module)({
         imports: [
             mongoose_1.MongooseModule.forFeature([{ name: user_schema_1.TUser.name, schema: user_schema_1.UserSchema }]),
+            mongoose_1.MongooseModule.forRoot('mongodb+srv://toeiisararawee:toeiisararawee@cluster0.jodvh.mongodb.net/'),
             auth_module_1.AuthModule,
             jwt_module_1.JwtModule.register({
                 secret: 'secret',

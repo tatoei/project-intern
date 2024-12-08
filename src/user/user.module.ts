@@ -13,7 +13,7 @@ import { AuthService } from '@/auth/auth.service';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: TUser.name, schema: UserSchema }]),
-    // MongooseModule.forRoot('mongodb://localhost/nest_test'), 
+    MongooseModule.forRoot('mongodb+srv://toeiisararawee:toeiisararawee@cluster0.jodvh.mongodb.net/'), 
     AuthModule,
     JwtModule.register({
       secret: 'secret',

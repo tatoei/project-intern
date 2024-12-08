@@ -26,7 +26,7 @@ exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
             mongoose_1.MongooseModule.forFeature([{ name: user_schema_1.TUser.name, schema: user_schema_1.UserSchema }]),
-            mongoose_1.MongooseModule.forRoot('mongodb://localhost/nest_test'),
+            mongoose_1.MongooseModule.forRoot('mongodb+srv://toeiisararawee:toeiisararawee@cluster0.jodvh.mongodb.net/'),
             passport_1.PassportModule,
             config_1.ConfigModule.forFeature(refresh_jwt_config_1.default),
             jwt_1.JwtModule.register({
