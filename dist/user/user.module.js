@@ -33,7 +33,7 @@ exports.UserModule = UserModule = __decorate([
         ],
         providers: [user_service_1.UserService, auth_service_1.AuthService, jwt_strategy_1.JwtStrategy,],
         controllers: [user_controller_1.UserController, auth_controller_1.AuthController],
-        exports: [user_service_1.UserService],
+        exports: [user_service_1.UserService, mongoose_1.MongooseModule],
     })
 ], UserModule);
 //# sourceMappingURL=user.module.js.map

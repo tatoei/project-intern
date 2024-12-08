@@ -22,7 +22,7 @@ import { AuthService } from '@/auth/auth.service';
   ],
   providers: [UserService,AuthService, JwtStrategy,],
   controllers: [UserController,AuthController],
-  exports: [UserService], // Only add controllers here
+  exports: [UserService,MongooseModule], // Only add controllers here
 })
 export class UserModule {}
 
